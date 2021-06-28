@@ -12,6 +12,7 @@ Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'Chiel92/vim-autoformat'
+Plug 'EvanQuan/vim-executioner'
 
 call plug#end()
 
@@ -19,11 +20,12 @@ filetype plugin indent on
 
 set mouse=a
 set number " Show absolute line numbers on the left.
+set clipboard=unnamedplus       " Copy/paste between vim and other programs.
+set nowrap
 syntax on " Turn syntax highlighting on
 set ai " Sets auto-indentation
 set si " Sets smart-indentation
 set noswapfile " Prevent vim from creating .swp files
-set wrap " Wrap overflowing lines
 set hlsearch " When searching (/), highlights matches as you go
 set incsearch " When searching (/), display results as you type (instead of only upon ENTER)
 set ignorecase
@@ -61,6 +63,7 @@ nnoremap S :%s//g<Left><Left>
 nnoremap <CR> :noh<CR><CR>
 
 let mapleader  =","
+map <silent> <leader>e  :Executioner<CR>
 map <silent> <leader>n  :NERDTreeToggle<CR>
 map <silent> <leader>f  :Files<CR>
 map <silent> <leader>s  :Startify<CR>

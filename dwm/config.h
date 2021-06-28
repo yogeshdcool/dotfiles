@@ -68,9 +68,9 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title       tags mask     iscentered   isfloating   monitor */
 	{ NULL,       NULL,       "Pictures/screenshots", 0,0,           1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           0,           -1 },
  	{ NULL,       NULL,       "Event Tester", 0,        1,           1,           -1 }, /* xev */
- 	{ "Dragon-drag-and-drop", NULL,       NULL,         0,           1,            1,           -1 }, /* xev */
+ 	{ NULL,       NULL,       "Picture-in-picture",   0,0,           1,           -1 },
+ 	{ "Dragon-drag-and-drop", NULL,       NULL,         0,           1,            1,-1 }, /* xev */
 	{ NULL,		  "spterm",	  NULL,		  SPTAG(0),     0,           1,			  -1 },
 	{ NULL,	  	  "spvim",	  NULL,		  SPTAG(1),		0,           1,			  -1 },
 	{ NULL,	      "spcalc",	  NULL,	      SPTAG(2),		0,           1,			  -1 },
@@ -83,7 +83,6 @@ static const int resizehints = 1;    /* 1 means respect size hints in tiled resi
 
 #define FORCE_VSPLIT 1  /* nrowgrid layout: force two clients to always split vertically */
 #include "vanitygaps.c"
-#include "movestack.c"
 #include <X11/XF86keysym.h>
 
 static const Layout layouts[] = {
@@ -122,15 +121,15 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_Return, spawn,          Shell(Terminal) },
     { MODKEY,             			XK_space,  spawn,          Shell("rofi -modi drun,file-browser,window,run -show drun -show-icons -sidebar-mode")},
-	{ MODKEY,                       XK_a,      spawn,          Shell("brave") },
-	{ MODKEY,		                XK_z,      spawn,          Shell("thunar") },
-	{ MODKEY,       		        XK_x,      spawn,          Shell("gvim") },
+	{ MODKEY,                       XK_w,      spawn,          Shell("brave") },
+	{ MODKEY,		                XK_x,      spawn,          Shell("thunar") },
+	{ MODKEY,       		        XK_z,      spawn,          Shell("gvim") },
  	{ MODKEY,                       XK_s,      spawn,          Shell("vscodium") },
 	{ MODKEY|ControlMask,         	XK_Return, spawn,          Term("nvim") },
 	{ MODKEY|Mod1Mask,   	    	XK_Return, spawn,          Term("ranger") },
-	{ MODKEY,                       XK_w,      spawn,          Term("mocp") },
+	{ MODKEY,                       XK_a,      spawn,          Term("mocp") },
 	{ MODKEY,                       XK_e,      spawn,          Term("gotop") },
-	{ MODKEY|ShiftMask,             XK_l,      spawn,          Shell("betterlockscreen -l dimblur") },
+	{ MODKEY|ControlMask,           XK_l,      spawn,          Shell("betterlockscreen -l dimblur") },
 	{ MODKEY,		                XK_F1,     spawn,          Shell("~/.bin/powermenu.sh") },
 	{ MODKEY,		                XK_F2,     spawn,          Shell("~/.bin/network.sh") },
 	{ 0,		                    XK_Print,  spawn,          Shell("~/.bin/screenshot.sh") },
@@ -140,6 +139,8 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_b,      spawn,          Shell("systemctl suspend") },
 	{ 0,                            XF86XK_MonBrightnessUp,    spawn,     Shell("light -A 1") },
 	{ 0,                            XF86XK_MonBrightnessDown,  spawn,     Shell("light -U 1") },
+	{ Mod1Mask,                     XK_F2,     spawn,          Shell("light -S 0") },
+	{ Mod1Mask,                     XK_F3,     spawn,          Shell("light -S 6") },
 	{ 0,                            XF86XK_AudioRaiseVolume,   spawn,     Shell("amixer -c 0 -q set Master 2dB+") },
 	{ 0,                            XF86XK_AudioLowerVolume,   spawn,     Shell("amixer -c 0 -q set Master 2dB-") },
 	{ 0,                            XF86XK_AudioMute,      	   spawn,     Shell("amixer set Master toggle") },
@@ -154,9 +155,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_d,      incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
-	{ MODKEY|ShiftMask,             XK_j,      movestack,      {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_k,      movestack,      {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_Return, zoom,           {0} },
+	{ MODKEY|ShiftMask,           	XK_j,      pushdown,       {0} },
+	{ MODKEY|ShiftMask,           	XK_k,      pushup,         {0} },
+	{ MODKEY|ShiftMask,           	XK_h,      pushdownmaster, {0} },
+	{ MODKEY|ShiftMask,           	XK_l,      pushupmaster,   {0} },
 	{ MODKEY|ShiftMask,    			XK_minus,  togglegaps,     {0} },
 	{ MODKEY|ShiftMask,             XK_equal,  defaultgaps,    {0} },
 	{ MODKEY,              			XK_equal,  incrgaps,       {.i = +1 } },
@@ -168,7 +171,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      setlayout,      {.v = &layouts[4]} },
 	{ MODKEY,                       XK_c,      setlayout,      {.v = &layouts[5]} },
 	{ MODKEY|ShiftMask,             XK_f,      setlayout,      {.v = &layouts[13]} },
-	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {0} },
+	{ MODKEY|ShiftMask,             XK_space,  setlayout,      {13} },
 	{ MODKEY,						XK_comma,  cyclelayout,    {.i = -1 } },
 	{ MODKEY,           			XK_period, cyclelayout,    {.i = +1 } },
 	{ MODKEY|ControlMask,           XK_f,  	   togglefloating, {0} },

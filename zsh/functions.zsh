@@ -12,3 +12,7 @@ function gx() {
     fi
     git push && git push gitlab
 }
+
+function yt() {
+    youtube-dl -x --audio-format mp3 --add-metadata --embed-thumbnail ytsearch:"$1" -o "~/Music/Tracks/%(title)s.%(ext)s"
+}

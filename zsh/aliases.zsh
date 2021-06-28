@@ -5,20 +5,23 @@ alias -g .....='../../../..'
 alias -g ......='../../../../..'
 
 alias md='mkdir -p'
-alias rmd='rm -r'
-alias rmf='rm -rf'
+alias rd='rm -r'
+alias rf='rm -rf'
 
 # List directory contents
 # Changing "ls" to "exa"
-alias ls='exa --color=always --group-directories-first'
-alias ll='exa -a --color=always --group-directories-first'
-alias la='exa -l --color=always --group-directories-first'
-alias lh='exa -al --color=always --group-directories-first'
-alias lt='exa -aT --color=always --group-directories-first'
+alias ls='exa --group-directories-first'
+alias la='exa -a --group-directories-first'
+alias ll='exa -l --group-directories-first'
+alias lh='exa -al --group-directories-first'
+alias lt='exa -aT --group-directories-first'
 
-alias cpr='cp -r'
-alias cp="cp -i"                          # confirm before overwriting something
+alias cr='cp -r'
 alias df='df -h'
+
+alias se='sudo systemctl enable'
+alias sd='sudo systemctl disable'
+alias str='sudo systemctl start'
 
 # Package management
 alias pac='sudo pacman -S'   # install
@@ -29,6 +32,7 @@ alias pir='pip install -r'
 alias pacu='sudo pacman -Syyy'
 alias pacup='sudo pacman -Syu'    # update, add 'a' to the list of letters to update AUR packages if you use yaourt
 alias pacr='sudo pacman -Rs'   # remove
+alias pacrm='sudo pacman -Rsndd'
 alias pipu='pip uninstall'
 alias pipr='pip3-autoremove'
 alias pacs='pacman -Ss'      # search
@@ -42,6 +46,9 @@ alias paclf='pacman -Ql'   # list files
 alias pacl='pacman -Qe'
 alias pacli='pacman -Q'
 alias pacla='pacman -Qm'   # list packages not found in official repos
+alias pan='pacman -Q | wc -l'
+alias pane='pacman -Qe | wc -l'
+alias pay='pacman -Qm | wc -l'
 
 # Editors
 alias nano='nvim'
@@ -63,16 +70,22 @@ alias gpl='git pull'
 alias grep='grep --colour=auto'
 
 # Fzf
-alias fai='pacman -Slq | fzf --multi --preview "pacman -Si {1}" | xargs -ro sudo pacman -S'
+alias fap='pacman -Slq | fzf --multi --preview "pacman -Si {1}" | xargs -ro sudo pacman -S'
 alias fay='yay -Slq | fzf --multi --preview "yay -Si {1}" | xargs -ro yay -S'
 alias far='pacman -Qq | fzf --multi --preview "pacman -Qi {1}" | xargs -ro sudo pacman -Rs'
+
+#NordVpn
+alias nc='nord connect'
+alias nd='nord disconnect'
+alias ns='nord status'
 
 # Terminal rickroll!
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
 
 # Others
+alias cl='clear'
 alias re='source ~/.zshrc'
-alias cwm='cd ~/.config/dwm'
+alias cdm='cd ~/.config/dwm'
 alias pyd='cd ~/Projects/python3'
 alias nv='nvim ~/.config/nvim/init.vim'
 alias sumake='sudo make clean install'
@@ -81,8 +94,8 @@ alias py='python'
 alias pi='ping -c 1 google.com'
 alias dun='du -sh *'
 alias duh='du -d 1 -h'
-alias lin='ls | wc -lines'
-alias lih='ls -a | wc -lines'
+alias lin='ls | wc -l'
+alias lih='ls -a | wc -l'
 alias wion='nmcli radio wifi on'
 alias wiof='nmcli radio wifi off'
 alias tb='nc termbin.com 9999'
@@ -91,3 +104,4 @@ alias redq='redshift -x'
 alias sudo='sudo '
 alias xp='chmod +x'
 alias mx='mocp -x'
+alias ma='mpv --no-audio-display'

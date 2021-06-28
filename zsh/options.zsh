@@ -3,7 +3,7 @@ autoload -U colors && colors
 
 PS1="%{$fg[red]%}➜  %{$fg[yellow]%}%2~ "
 
-PATH=~/.local/bin:~/.bin:$PATH
+PATH=~/.bin:~/.local/.bin:$PATH
 EDITOR=nvim
 
 # History in cache directory:

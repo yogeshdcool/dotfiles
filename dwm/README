@@ -6,14 +6,15 @@ List of patches added:
     cyclelayouts-20180524-6.2
     fixborders-6.2
     hide_vacant_tags-6.2
-    movestack-6.1
     nomonocleborders-20190607-cb3f58a(got it from reddit)
     pertag-20200914-61bb8b2
+    push_no_master-6.2(added custom features)
     scratchpads-20200414-728d397b
     sticky-6.1
     stickyindicator-6.2
     vanitygaps
-    viewontag-20210312-61bb8b2     
+    viewontag-20210312-61bb8b2
+    zoomswap-6.2     
 
 dwm - dynamic window manager
 ============================
